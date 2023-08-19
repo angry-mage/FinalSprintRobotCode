@@ -1,0 +1,452 @@
+# Define scanning for marker function
+def scan_for_marker():
+    # Turn on detection and scan!
+    vision_ctrl.enable_detection(rm_define.vision_detection_marker)
+
+    gimbal_ctrl.yaw_ctrl(-95)
+    gimbal_ctrl.yaw_ctrl(95)
+
+    gimbal_ctrl.recenter()
+    
+    print("MARKER DETECTED")
+    vision_ctrl.disable_detection(rm_define.vision_detection_marker)
+    
+
+
+def scan_for_person():
+    # Turn on detection and scan
+    vision_ctrl.enable_detection(rm_define.vision_detection_people)
+
+    gimbal_ctrl.yaw_ctrl(-95)
+    gimbal_ctrl.yaw_ctrl(95)
+
+    gimbal_ctrl.recenter()
+
+    vision_ctrl.disable_detection(rm_define.vision_detection_people)
+
+
+def vision_recognized_people(msg):
+    # Turn off detection
+    vision_ctrl.disable_detection(rm_define.vision_detection_people)
+
+    # Make a sound. Once complete it will return back to the main
+    # program where it was called.
+    media_ctrl.play_sound(rm_define.media_sound_recognize_success)
+    print("PERSON DETECTED")
+
+
+def vision_recognized_marker_number_one(msg):
+
+    chassis_ctrl.set_rotate_speed(80)
+
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 360)
+
+    gimbal_ctrl.set_rotate_speed(50)
+
+    gimbal_ctrl.pitch_ctrl(15)
+
+    gimbal_ctrl.yaw_ctrl(-250)
+
+    gimbal_ctrl.recenter()
+
+    vision_ctrl.disable_detection(rm_define.vision_detection_marker)
+
+ 
+
+def vision_recognized_marker_number_two(msg):
+
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_all, 0,255,0, rm_define.effect_flash)
+
+    led_ctrl.set_top_led(rm_define.armor_top_all, 255,99,171, rm_define.effect_flash)
+
+    time.sleep(2)
+
+    led_ctrl.set_top_led(rm_define.armor_top_all, 69, 215, 255, rm_define.effect_always_on)
+
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_all, 69, 215, 255, rm_define.effect_always_on)
+
+    vision_ctrl.disable_detection(rm_define.vision_detection_marker)
+
+ 
+
+def vision_recognized_marker_number_three(msg):
+
+    chassis_ctrl.set_rotate_speed(100)
+
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 360)
+
+    gimbal_ctrl.set_rotate_speed(100)
+
+    gimbal_ctrl.pitch_ctrl(15)
+
+    gimbal_ctrl.yaw_ctrl(-250)
+
+    gimbal_ctrl.recenter()
+
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_all, 0,255,0, rm_define.effect_flash)
+
+    led_ctrl.set_top_led(rm_define.armor_top_all, 255,99,171, rm_define.effect_flash)
+
+    time.sleep(2)
+
+    led_ctrl.set_top_led(rm_define.armor_top_all, 69, 215, 255, rm_define.effect_always_on)
+
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_all, 69, 215, 255, rm_define.effect_always_on)
+
+    vision_ctrl.disable_detection(rm_define.vision_detection_marker)
+
+    gimbal_ctrl.set_rotate_speed(60)
+    chassis_ctrl.set_rotate_speed(60)
+    chassis_ctrl.set_trans_speed(0.85)
+
+def vision_recognized_marker_letter_F(msg):  
+    # What to do when you find an "F" marker
+    vision_ctrl.disable_detection(rm_define.vision_detection_marker)
+
+    gimbal_ctrl.recenter()
+
+    vision_ctrl.detect_marker_and_aim(rm_define.marker_letter_F)
+
+    gun_ctrl.fire_once()
+
+
+def start():
+    # Room types (change as needed)
+
+    Room1Type = 2
+    Room2Type = 1
+    Room3Type = 2
+
+    # Set speeds and mode
+    robot_ctrl.set_mode(rm_define.robot_mode_free)
+
+    gimbal_ctrl.set_rotate_speed(100)
+    chassis_ctrl.set_rotate_speed(60)
+    chassis_ctrl.set_trans_speed(0.95)
+    gimbal_ctrl.recenter()
+
+    # Jeremy moves from start and completes zigzag immaculately
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 0.8)
+    chassis_ctrl.set_trans_speed(0.45)
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+    chassis_ctrl.move_with_distance(0, 0.83)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+    chassis_ctrl.move_with_distance(0, 0.43)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+    chassis_ctrl.move_with_distance(0, 1.58)
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+    chassis_ctrl.move_with_distance(0, 0.51)
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+    chassis_ctrl.move_with_distance(0, 0.57)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 45)
+    chassis_ctrl.move_with_distance(0, 1.6)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 45)
+    chassis_ctrl.move_with_distance(0, 0.50)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+    chassis_ctrl.move_with_distance(0, 0.80)
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+    chassis_ctrl.move_with_distance(0, 0.40)
+    gimbal_ctrl.recenter()
+    time.sleep(5)
+
+
+    # Jeremy moves from end of zigzag to room 227
+    chassis_ctrl.set_trans_speed(0.95)
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 1.5)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+    
+    gimbal_ctrl.recenter()
+    
+    if Room1Type == 1:
+        # Enter room 227 and complete objective
+        chassis_ctrl.move_with_distance(0, 2.11)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        chassis_ctrl.move_with_distance(0, 2.06)
+
+        gimbal_ctrl.recenter()
+        
+        scan_for_marker()
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 180)
+        chassis_ctrl.move_with_distance(0, 2.06)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        chassis_ctrl.move_with_distance(0, 2.11)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+
+    if Room1Type == 2:
+        # turn right back around
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        gimbal_ctrl.recenter()
+    
+    if Room1Type == 3:
+        # Enter room 227 and complete objective
+        chassis_ctrl.move_with_distance(0, 2.11)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        chassis_ctrl.move_with_distance(0, 2.12)
+
+        gimbal_ctrl.recenter()
+        
+        scan_for_person()
+
+        gimbal_ctrl.recenter()
+
+        # Exit room 227 and go back to start
+        chassis_ctrl.set_trans_speed(0.55)
+        vision_ctrl.disable_detection(rm_define.vision_detection_people)
+        media_ctrl.play_sound(rm_define.media_custom_audio_0,wait_for_complete_flag=True)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 180)
+        gimbal_ctrl.recenter()
+        chassis_ctrl.move_with_distance(0, 2.11)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        chassis_ctrl.move_with_distance(0, 2.11)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 1.5)
+        gimbal_ctrl.recenter()
+        time.sleep(5)
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 3.53)
+        
+        # Go back to room 227 and continue forward!
+        chassis_ctrl.set_trans_speed(0.95)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 180)
+        gimbal_ctrl.recenter()
+        time.sleep(5)
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 3.53)
+        time.sleep(5)
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 1.5)
+
+    # Continue down the hall to point D
+    gimbal_ctrl.recenter()
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 0.31)
+    time.sleep(5)
+    
+    # Move from point D to room 225 and turn
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 0.1)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+
+    gimbal_ctrl.recenter()
+    
+    if Room2Type == 1:
+        # Enter room 225 and complete objective!
+        chassis_ctrl.move_with_distance(0, 2.39)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        gimbal_ctrl.recenter()
+        
+        chassis_ctrl.move_with_distance(0, 1.50)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        gimbal_ctrl.recenter()
+        
+        chassis_ctrl.move_with_distance(0, 4.83)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.move_with_distance(0, 1.21)
+        scan_for_marker()
+
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 180)
+        chassis_ctrl.move_with_distance(0, 1.21)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.move_with_distance(0, 4.83)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.move_with_distance(0, 1.50)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.move_with_distance(0, 2.39)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        gimbal_ctrl.recenter()
+
+    if Room2Type == 2:
+        # Avoid the poisonous room of agonizing demise
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+    
+    if Room2Type == 3:
+        # Enter room 225, locate survivor, ensure victory
+        chassis_ctrl.move_with_distance(0, 2.39)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        gimbal_ctrl.recenter()
+        
+        chassis_ctrl.move_with_distance(0, 1.50)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        gimbal_ctrl.recenter()
+        
+        chassis_ctrl.move_with_distance(0, 4.83)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.move_with_distance(0, 1.20)
+        scan_for_person()
+
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 180)
+        media_ctrl.play_sound(rm_define.media_custom_audio_0,wait_for_complete_flag=True)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.set_trans_speed(0.55)
+        chassis_ctrl.move_with_distance(0, 1.20)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.move_with_distance(0, 4.83)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.move_with_distance(0, 1.50)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        gimbal_ctrl.recenter()
+
+        chassis_ctrl.move_with_distance(0, 2.39)
+        chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+        gimbal_ctrl.recenter()
+
+        # Move down the hall towards safety and wait at point D
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 0.1)
+        time.sleep(5)
+
+        # Move from point D to the top of the zig zag and wait again
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 1.81)
+        time.sleep(5)
+
+        # Move from the top of the zig zag to safety and turn
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 3.53)
+        chassis_ctrl.rotate_with_degree(rm_define.clockwise, 180)
+        gimbal_ctrl.recenter()
+        chassis_ctrl.set_trans_speed(0.95)    
+
+        # Move from the start to the top of the zig zag and wait
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 3.53)
+        time.sleep(5)
+
+        # Move from the top of the zig zag to point D and wait
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 1.81)
+        time.sleep(5)
+
+        # Move from point D back to room 225
+        chassis_ctrl.move_with_distance(0, 5)
+        chassis_ctrl.move_with_distance(0, 0.1)
+
+
+    # Continue down the hall to point F
+    chassis_ctrl.move_with_distance(0, 3.70)
+    
+    # Scan for marker!
+    scan_for_marker()
+    vision_ctrl.disable_detection(rm_define.vision_detection_marker)
+    time.sleep(5)
+
+    # Move to 224B
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 90)
+    gimbal_ctrl.recenter()
+
+    gimbal_ctrl.set_rotate_speed(120)
+
+    gimbal_ctrl.yaw_ctrl(20)
+    gimbal_ctrl.yaw_ctrl(-20)
+    gimbal_ctrl.yaw_ctrl(20)
+    gimbal_ctrl.yaw_ctrl(-20)
+    gimbal_ctrl.yaw_ctrl(20)
+    gimbal_ctrl.yaw_ctrl(-20)
+
+    gimbal_ctrl.set_rotate_speed(60)
+
+    # Ignore 224B and continue to point H then turn
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 90)
+    gimbal_ctrl.recenter()
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 0.27)
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 180)
+    gimbal_ctrl.recenter()
+    time.sleep(5)
+
+    # Move to and stop at point F for a reset
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 0.16)
+    time.sleep(5)
+
+    # Move to point D from point F
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 3.76)
+    
+    # Do a thing at point D
+    media_ctrl.play_sound(rm_define.media_custom_audio_2,wait_for_complete_flag=False)
+
+    chassis_ctrl.set_trans_speed(1.0)
+    gimbal_ctrl.set_rotate_speed(290)
+    chassis_ctrl.set_rotate_speed(290)
+
+    led_ctrl.set_flash(rm_define.armor_all, 10)
+    led_ctrl.set_flash(rm_define.armor_all, 10)
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_all, 50,100,200, rm_define.effect_flash)
+    led_ctrl.set_top_led(rm_define.armor_top_all, 70,100,250, rm_define.effect_flash)
+
+    chassis_ctrl.move_with_distance(0, 0.25)
+    chassis_ctrl.move_with_distance(180, 0.50)
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 360)
+    
+    chassis_ctrl.move_with_distance(0, 0.25)
+    chassis_ctrl.move_with_distance(90, 0.20)
+    chassis_ctrl.move_with_distance(-90, 0.40)
+    chassis_ctrl.move_with_distance(90, 0.40)
+    chassis_ctrl.move_with_distance(-90, 0.40)
+    chassis_ctrl.move_with_distance(90, 0.40)
+    chassis_ctrl.move_with_distance(-90, 0.40)
+    chassis_ctrl.move_with_distance(90, 0.20)
+
+    gimbal_ctrl.set_rotate_speed(60)
+    chassis_ctrl.set_rotate_speed(60)
+    chassis_ctrl.set_trans_speed(0.95)
+
+    led_ctrl.set_top_led(rm_define.armor_top_all, 0,255,0, rm_define.effect_always_on)
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_all, 0,255,0, rm_define.effect_always_on)
+
+    gimbal_ctrl.recenter()
+
+    time.sleep(5)
+    
+    # Move from point D to the start
+    chassis_ctrl.set_trans_speed(1)
+
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 1.81)
+    time.sleep(5)
+    chassis_ctrl.move_with_distance(0, 5)
+    chassis_ctrl.move_with_distance(0, 3.53)
+
+    # Celebrate
+    media_ctrl.play_sound(rm_define.media_custom_audio_3,wait_for_complete_flag=False)
+
+    chassis_ctrl.set_rotate_speed(300)
+    gimbal_ctrl.set_rotate_speed(280)
+    
+    led_ctrl.set_flash(rm_define.armor_all, 10)
+    led_ctrl.set_flash(rm_define.armor_all, 10)
+
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 360)
+    chassis_ctrl.rotate_with_degree(rm_define.clockwise, 360)
+    chassis_ctrl.rotate_with_degree(rm_define.anticlockwise, 360)
+
+    gimbal_ctrl.yaw_ctrl(250)
+    gimbal_ctrl.yaw_ctrl(250)
+    gimbal_ctrl.recenter()
+
+    led_ctrl.set_bottom_led(rm_define.armor_bottom_all, 200,40,70, rm_define.effect_flash)
+    led_ctrl.set_top_led(rm_define.armor_top_all, 225,0,10, rm_define.effect_flash)
